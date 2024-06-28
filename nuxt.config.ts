@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: "page", mode: "out-in" },
   },
+  ssr: false,
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxtjs/google-fonts",

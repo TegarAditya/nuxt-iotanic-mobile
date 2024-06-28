@@ -33,7 +33,7 @@ export async function getWeatherData(latitude: number, longitude: number) {
 
   const current = response.current()!
 
-  const weatherData = {
+  const weatherData: WeatherData = {
     current: {
       time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
       temperature2m: current.variables(0)!.value(),
@@ -45,7 +45,7 @@ export async function getWeatherData(latitude: number, longitude: number) {
       windSpeed10m: current.variables(5)!.value(),
       address: address,
     },
-  }
+  };
 
   return weatherData
 }

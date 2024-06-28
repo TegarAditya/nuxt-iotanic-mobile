@@ -7,9 +7,20 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "ionic:build": "npm run build",
+    "ionic:serve": "npm run dev"
   },
   "dependencies": {
+    "@capacitor/android": "6.1.0",
+    "@capacitor/app": "6.0.0",
+    "@capacitor/camera": "^6.0.1",
+    "@capacitor/cli": "6.1.0",
+    "@capacitor/core": "6.1.0",
+    "@capacitor/haptics": "6.0.0",
+    "@capacitor/keyboard": "6.0.1",
+    "@capacitor/status-bar": "6.0.0",
+    "@ionic/pwa-elements": "^3.3.0",
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/tailwindcss": "^6.12.0",
@@ -31,5 +42,6 @@
     "nuxt-primevue": "^3.0.0",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5"
-  }
+  },
+  "version": "0.0.0"
 }

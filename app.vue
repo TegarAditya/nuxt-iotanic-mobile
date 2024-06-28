@@ -1,13 +1,17 @@
 <template>
   <div>
     <NuxtRouteAnnouncer />
+    <NuxtLoadingIndicator />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { defineCustomElements } from "@ionic/pwa-elements/loader"
+defineCustomElements(window)
+</script>
 
 <style>
 @import url("~/assets/css/base.css");

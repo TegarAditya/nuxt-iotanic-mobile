@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 pb-32">
     <div class="header flex items-center justify-between pt-5">
       <p class="text-xl font-bold text-white">Rara</p>
       <Button
@@ -113,13 +113,15 @@
 </template>
 
 <script lang="ts" setup>
+import type { CurrentWeather, WeatherData } from '~/types/weather';
+
 definePageMeta({
   layout: "dashboard",
 })
 
 const latitude = ref(0)
 const longitude = ref(0)
-const weather = ref()
+const weather: Ref<CurrentWeather | null> = useState('weather')
 const toggle = ref(false)
 const placeholderArray = Array.from({ length: 4 })
 
