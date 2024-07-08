@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-5 pb-32">
+  <div class="px-4 py-5 pb-20">
     <div class="w-full py-2">
       <h1 class="text-center text-xl font-bold text-white">
         {{ imageSrc ? "Hasil Scan" : "Scan Penyakit" }}
@@ -49,8 +49,15 @@
             </h2>
           </div>
           <div class="w-full rounded-xl border-2 border-gray-600 p-2">
-            <h3 class="text-center text-2xl font-bold text-white">Perawatan</h3>
-            <div class="prose p-5 text-white text-justify" v-html="diseaseContent"></div>
+            <ScrollPanel style="width: 100%; height: 200px">
+              <h3 class="text-center text-2xl font-bold text-white">
+                Perawatan
+              </h3>
+              <div
+                class="prose p-5 text-justify text-white"
+                v-html="diseaseContent"
+              ></div>
+            </ScrollPanel>
           </div>
           <Button
             class="my-4 w-full text-lg"
@@ -130,7 +137,7 @@ watch(imageSrc, async (value) => {
   const variables = { name: diseaseLabel.value }
   const { result } = useQuery<RecommendationResponse>(query, variables)
 
-  console.log(result.value)
+  console.log(result.value, diseaseLabel.value)
 
   diseaseContent.value = result.value?.recommendation.content ?? "N/A"
 })
@@ -139,6 +146,6 @@ watch(imageSrc, async (value) => {
 <style scoped>
 prose ol {
   list-style-type: decimal;
-  margin-right: 3rem;
+  margin-right: 4rem;
 }
 </style>
