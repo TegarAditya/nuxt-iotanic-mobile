@@ -21,7 +21,7 @@
             ketahui perawatan yang tepat
           </p>
           <Button
-            class="my-4 px-5 w-fit text-lg"
+            class="my-4 w-fit px-5 text-lg"
             icon="pi pi-camera"
             label="Ambil gambar"
             raised
@@ -34,16 +34,23 @@
       <div
         class="mt-5 flex min-h-32 w-full flex-col items-center justify-center"
       >
-        <NuxtImg :src="imageSrc" v-if="imageSrc" class="rounded-2xl aspect-square w-full object-cover object-center"/>
-        <div class="py-4 flex flex-col gap-4 mt-3 px-2 w-full">
-          <div class="p-2 border-gray-600 border-2 w-full rounded-full">
-            <h2 class="text-lg text-center font-bold text-white">Sebuah Penyakit</h2>
+        <NuxtImg
+          :src="imageSrc"
+          v-if="imageSrc"
+          class="aspect-square w-full rounded-2xl object-cover object-center"
+        />
+        <div class="mt-3 flex w-full flex-col gap-4 px-2 py-4">
+          <div class="w-full rounded-full border-2 border-gray-600 p-2">
+            <h2
+              class="text-center text-lg font-bold text-white"
+              v-if="diseaseLabel"
+            >
+              {{ diseaseLabel }}
+            </h2>
           </div>
-          <div class="p-2 border-gray-600 border-2 w-full rounded-xl">
-            <h3 class="text-2xl text-center font-bold text-white">Perawatan</h3>
-            <p class="text-white p-5">
-              ...
-            </p>
+          <div class="w-full rounded-xl border-2 border-gray-600 p-2">
+            <h3 class="text-center text-2xl font-bold text-white">Perawatan</h3>
+            <div class="prose p-5 text-white text-justify" v-html="diseaseContent"></div>
           </div>
           <Button
             class="my-4 w-full text-lg"
@@ -65,8 +72,17 @@ definePageMeta({
   layout: "dashboard",
 })
 
-//@ts-ignore
+interface RecommendationResponse {
+  recommendation: Recommendation
+}
+
+interface Recommendation {
+  content: string
+}
+
 const imageSrc = useState(() => "")
+const diseaseLabel = useState(() => "")
+const diseaseContent = useState(() => "")
 
 const takePicture = async () => {
   const image = await Camera.getPhoto({
@@ -83,6 +99,46 @@ const takePicture = async () => {
     imageSrc.value = imageUrl
   }
 }
+
+watch(imageSrc, async (value) => {
+  const config = useRuntimeConfig()
+
+  const blob = await fetch(value).then((res) => res.blob())
+
+  const formData = new FormData()
+
+  formData.append("file", blob)
+
+  await $fetch(config.public.scanApiUrl, {
+    method: "POST",
+    body: formData,
+  })
+    .then((res) => {
+      diseaseLabel.value = res.class
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+
+  const query = gql`
+    query ($name: String!) {
+      recommendation(name: $name) {
+        content
+      }
+    }
+  `
+  const variables = { name: diseaseLabel.value }
+  const { result } = useQuery<RecommendationResponse>(query, variables)
+
+  console.log(result.value)
+
+  diseaseContent.value = result.value?.recommendation.content ?? "N/A"
+})
 </script>
 
-<style></style>
+<style scoped>
+prose ol {
+  list-style-type: decimal;
+  margin-right: 3rem;
+}
+</style>

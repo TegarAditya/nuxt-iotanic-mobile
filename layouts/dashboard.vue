@@ -28,7 +28,7 @@
         @click="$router.push('/dashboard/analytics')"
       />
       <Button
-        icon="pi pi-images"
+        icon="pi pi-camera"
         class="w-full text-2xl font-bold text-white"
         text
         @click="$router.push('/dashboard/scan')"

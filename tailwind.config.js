@@ -5,6 +5,9 @@ export default {
   content: [
     "presets/**/*.{js,vue,ts}", // this is optional if you are using @nuxtjs/tailwindcss
   ],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
   theme: {
     extend: {
       colors: {

@@ -100,7 +100,6 @@
         >
           <div class="flex items-center justify-between">
             <NuxtImg src="/images/plant-icon.png" height="20" class="h-fit" />
-            <QToggle v-model="toggle" />
           </div>
           <div>
             <p class="text-sm font-bold text-white">Sawah {{ index }}</p>

@@ -1,5 +1,6 @@
 import { fetchWeatherApi } from "openmeteo"
 import type { Geolocation } from "~/types/geolocation"
+import type { WeatherData } from "~/types/weather"
 
 type WeatherCodeMap = { [key: number]: string }
 

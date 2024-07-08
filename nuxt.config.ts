@@ -6,6 +6,12 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: "page", mode: "out-in" },
   },
+  runtimeConfig: {
+    public: {
+      scanApiUrl: process.env.SCAN_API_URL,
+      graphApiUrl: process.env.GRAPH_API_URL,
+    },
+  },
   ssr: false,
   modules: [
     "@nuxtjs/tailwindcss",
@@ -13,6 +19,7 @@ export default defineNuxtConfig({
     "nuxt-primevue",
     "@nuxt/image",
     "@vueuse/nuxt",
+    "@nuxtjs/apollo",
   ],
   tailwindcss: {
     configPath: "tailwind.config.js",
@@ -30,6 +37,13 @@ export default defineNuxtConfig({
         wght: "200..800",
         ital: "200..800",
       },
+    },
+  },
+  apollo: {
+    clients: {
+      default: {
+        httpEndpoint: process.env.GRAPH_API_URL as string,
+      }
     },
   },
 })
