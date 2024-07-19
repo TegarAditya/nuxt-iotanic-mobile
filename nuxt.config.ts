@@ -2,6 +2,9 @@
 import path from "path"
 
 export default defineNuxtConfig({
+  nitro: {
+    node: true,
+  },
   devtools: { enabled: true },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
@@ -44,7 +47,7 @@ export default defineNuxtConfig({
     clients: {
       default: {
         httpEndpoint: process.env.GRAPH_API_URL as string,
-      }
+      },
     },
   },
 })
