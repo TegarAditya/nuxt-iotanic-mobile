@@ -13,37 +13,42 @@
   <div>
     <slot />
   </div>
-  <div class="fixed bottom-0 z-30 h-28 w-full pt-2">
-    <div class="navbar m-4 grid h-16 grid-cols-4 gap-2 rounded-xl p-2">
+  <div class="fixed bottom-0 z-30 h-24 w-full pt-2">
+    <div class="navbar m-4 mt-0 grid h-16 grid-cols-4 gap-2 rounded-xl p-2">
       <Button
         icon="pi pi-home"
         class="w-full text-2xl font-bold text-white"
-        text
+        :text="!/^\/dashboard\/?$/.test($router.currentRoute.value.path)"
+        severity="secondary"
         @click="$router.push('/dashboard')"
       />
       <Button
         icon="pi pi-th-large"
         class="w-full text-2xl font-bold text-white"
-        text
+        :text="!/^\/dashboard\/analytics.*/.test($router.currentRoute.value.path)"
+        severity="secondary"
         @click="$router.push('/dashboard/analytics')"
       />
       <Button
         icon="pi pi-camera"
         class="w-full text-2xl font-bold text-white"
-        text
+        :text="!/^\/dashboard\/scan.*/.test($router.currentRoute.value.path)"
+        severity="secondary"
         @click="$router.push('/dashboard/scan')"
       />
       <Button
         icon="pi pi-user"
         class="w-full text-2xl font-bold text-white"
-        text
+        :text="!/^\/dashboard\/profile.*/.test($router.currentRoute.value.path)"
+        severity="secondary"
         @click="$router.push('/dashboard/profile')"
       />
     </div>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+</script>
 
 <style>
 .gradient-circle {
