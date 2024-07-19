@@ -9,6 +9,7 @@ export interface WeatherData {
     weatherDescription: string
     windSpeed10m: number
     address: string
+    date: string
   }
 }
 

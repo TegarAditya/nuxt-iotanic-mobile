@@ -34,6 +34,8 @@ export async function getWeatherData(latitude: number, longitude: number) {
 
   const current = response.current()!
 
+  const date = new Date().toLocaleDateString('id-ID')
+
   const weatherData: WeatherData = {
     current: {
       time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
@@ -45,6 +47,7 @@ export async function getWeatherData(latitude: number, longitude: number) {
       weatherDescription: describeWeatherCode(current.variables(4)!.value()),
       windSpeed10m: current.variables(5)!.value(),
       address: address,
+      date: date,
     },
   };
 
