@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@vueuse/nuxt",
     "@nuxtjs/apollo",
+    "nuxt3-leaflet",
   ],
   tailwindcss: {
     configPath: "tailwind.config.js",

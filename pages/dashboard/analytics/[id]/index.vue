@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-5 pb-32">
+  <div class="px-4 py-5 pb-10">
     <nav class="grid w-full grid-cols-4 items-center py-5">
       <div class="flex w-full justify-start">
         <Button
@@ -26,50 +26,82 @@
         />
       </div>
     </nav>
-    <div>
-      <div class="hud h-fit w-full rounded-lg border-2 border-gray-300 p-5">
-        <div v-if="weather">
-          <div class="flex w-full items-start justify-between">
-            <div class="flex max-w-[70%] flex-col gap-2">
-              <div class="flex gap-2">
-                <p class="items-center text-3xl font-bold text-white">
-                  {{ weather.temperature2m.toFixed(2) }}° C
+    <ScrollPanel style="height: 75dvh" :pt="scrollPanelOptions" class="rounded-md overflow-hidden">
+      <div class="flex flex-col gap-4">
+        <div class="hud h-fit w-full rounded-lg border-2 border-gray-300 p-5">
+          <div v-if="weather">
+            <div class="flex w-full items-start justify-between">
+              <div class="flex max-w-[70%] flex-col gap-2">
+                <div class="flex gap-2">
+                  <p class="items-center text-3xl font-bold text-white">
+                    {{ weather.temperature2m.toFixed(2) }}° C
+                  </p>
+                </div>
+                <p class="text-sm font-semibold text-white">
+                  {{ weather.weatherDescription }}
+                </p>
+                <p class="text-sm text-gray-300">
+                  {{ date }}
                 </p>
               </div>
-              <p class="text-sm font-semibold text-white">
-                {{ weather.weatherDescription }}
-              </p>
-              <p class="text-sm text-gray-300">{{ new Intl.DateTimeFormat('id-ID', dateOptions).format(weather.time) }}</p>
+              <div>
+                <NuxtImg src="/images/cloudy.png" height="100" format="webp" />
+              </div>
             </div>
-            <div>
-              <NuxtImg src="/images/cloudy.png" height="100" format="webp" />
+            <br class="py-4" />
+            <div class="flex gap-2">
+              <i class="pi pi-map-marker text-white"></i>
+              <p class="text-sm text-white">{{ weather.address }}</p>
             </div>
           </div>
-          <br class="py-4" />
-          <div class="flex gap-2">
-            <i class="pi pi-map-marker text-white"></i>
-            <p class="text-sm text-white">{{ weather.address }}</p>
-          </div>
-        </div>
-        <div v-else>
-          <div class="flex justify-between">
-            <div class="flex flex-col gap-3">
-              <Skeleton width="10rem" height="3rem"></Skeleton>
-              <Skeleton height="1rem"></Skeleton>
+          <div v-else>
+            <div class="flex justify-between">
+              <div class="flex flex-col gap-3">
+                <Skeleton width="10rem" height="3rem"></Skeleton>
+                <Skeleton height="1rem"></Skeleton>
+              </div>
+              <Skeleton size="6rem" class="mr-2"></Skeleton>
             </div>
-            <Skeleton size="6rem" class="mr-2"></Skeleton>
           </div>
         </div>
+        <!--MAP-->
+        <div class="overflow-hidden rounded-2xl border-2 border-gray-300 p-3">
+          <div class="w-full">
+            <LMap
+              style="height: 15rem"
+              :zoom="zoom"
+              :center="[-7.562922, 110.835633]"
+              :use-global-leaflet="false"
+            >
+              <LTileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&amp;copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+                layer-type="base"
+                name="OpenStreetMap"
+              />
+              <LMarker :lat-lng="[-7.562922, 110.835633]">
+                <LPopup>{{ weather?.address }}</LPopup>
+              </LMarker>
+              <LControlScale position="topright" :imperial="false" :metric="true" />
+            </LMap>
+          </div>
+        </div>
+        <!-- ENDMAP -->
+
+        <!-- BUTTON APP -->
+        <div>
+          <Button class="w-full" raised>Monitoring Padi</Button>
+        </div>
+        <!-- END BUTTON APP -->
       </div>
-      <div class="w-full flex-col my-3">
-        <Button class="w-full py-3" severity="secondary" raised>Varietas Padi</Button>
-      </div>
-    </div>
+    </ScrollPanel>
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { CurrentWeather, WeatherData } from "~/types/weather"
+import type { PassThrough } from "primevue/ts-helpers"
+import type { ScrollPanelPassThroughOptions } from "primevue/scrollpanel"
 
 definePageMeta({
   layout: "dashboard",
@@ -77,22 +109,28 @@ definePageMeta({
 
 const route = useRoute()
 
+const zoom = ref(16)
+
 const id = ref(route.params.id)
 const latitude = ref(0)
 const longitude = ref(0)
 const weather: Ref<CurrentWeather | null> = ref(null)
-const toggle = ref(false)
-const placeholderArray = Array.from({ length: 4 })
+const date = ref("")
 
 const dateOptions: Intl.DateTimeFormatOptions = {
-  weekday: 'long',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  timeZone: 'Asia/Jakarta',
-};
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "Asia/Jakarta",
+}
+
+const scrollPanelOptions: PassThrough<ScrollPanelPassThroughOptions> = {
+  wrapper: {
+    style: { "border-right": "none" },
+  },
+  barY: "hidden",
+}
 
 onMounted(() => {
   navigator.geolocation.getCurrentPosition((position) => {
@@ -101,6 +139,9 @@ onMounted(() => {
     fetchWeatherData(latitude.value, longitude.value)
       .then((data) => {
         weather.value = data.current
+        date.value = new Intl.DateTimeFormat("id-ID", dateOptions).format(
+          data.current.time,
+        )
       })
       .catch((error) => {
         console.error("Error fetching weather data:", error)
