@@ -8,7 +8,6 @@
 </template>
 
 <script lang="ts" setup>
-//@ts-ignore
 definePageMeta({
   layout: "dashboard",
 })

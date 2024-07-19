@@ -34,37 +34,44 @@
       <div
         class="mt-5 flex min-h-32 w-full flex-col items-center justify-center"
       >
-        <NuxtImg
-          :src="imageSrc"
-          v-if="imageSrc"
-          class="aspect-square w-full rounded-2xl object-cover object-center"
-        />
-        <div class="mt-3 flex w-full flex-col gap-4 px-2 py-4">
-          <div class="w-full rounded-full border-2 border-gray-600 p-2">
+        <div class="relative w-full overflow-hidden rounded-2xl">
+          <div class="absolute right-0 top-0 z-10 m-2">
+            <Button
+              icon="pi pi-refresh"
+              icon-pos="right"
+              size="small"
+              severity="secondary"
+              class=""
+              rounded
+              raised
+              @click="takePicture"
+            />
+          </div>
+          <NuxtImg
+            :src="imageSrc"
+            v-if="imageSrc"
+            class="h-52 w-full object-cover object-center"
+          />
+          <div class="flex w-full items-center bg-primary">
             <h2
-              class="text-center text-lg font-bold text-white"
+              class="w-full py-2 text-center text-xl font-bold text-white"
               v-if="diseaseLabel"
             >
               {{ diseaseLabel }}
             </h2>
           </div>
-          <div class="w-full rounded-xl border-2 border-gray-600 p-2">
-            <ScrollPanel style="width: 100%; height: 200px">
-              <h3 class="text-center text-2xl font-bold text-white">
-                Perawatan
-              </h3>
+        </div>
+        <div class="mt-3 flex w-full flex-col gap-4 py-4">
+          <h3 class="text-center text-2xl font-bold text-white">Perawatan</h3>
+          <div class="w-full p-2">
+            <ScrollPanel style="width: 100%; height: 250px">
               <div
-                class="prose p-5 text-justify text-white"
+                class="recom px-3 text-justify text-white"
                 v-html="diseaseContent"
               ></div>
+              <ScrollTop />
             </ScrollPanel>
           </div>
-          <Button
-            class="my-4 w-full text-lg"
-            label="Ambil gambar lagi"
-            raised
-            @click="takePicture"
-          />
         </div>
       </div>
     </div>
@@ -121,7 +128,7 @@ watch(imageSrc, async (value) => {
     body: formData,
   })
     .then((res) => {
-      diseaseLabel.value = res.class
+      diseaseLabel.value = `${res.class} (${res.confidence.toFixed(2)*100}%)`
     })
     .catch((err) => {
       console.error(err)
@@ -139,13 +146,12 @@ watch(imageSrc, async (value) => {
 
   console.log(result.value, diseaseLabel.value)
 
-  diseaseContent.value = result.value?.recommendation.content ?? "N/A"
+  diseaseContent.value = result.value?.recommendation.content ?? ""
 })
 </script>
 
-<style scoped>
-prose ol {
+<style>
+ol {
   list-style-type: decimal;
-  margin-right: 4rem;
 }
 </style>
