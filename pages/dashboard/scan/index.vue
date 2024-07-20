@@ -38,9 +38,9 @@
           <div class="absolute right-0 top-0 z-10 m-2">
             <Button
               icon="pi pi-refresh"
-              icon-pos="right"
+              label="Ulangi"
               size="small"
-              severity="secondary"
+              severity="contrast"
               class=""
               rounded
               raised
@@ -65,39 +65,18 @@
           <h3 class="text-center text-2xl font-bold text-white">Perawatan</h3>
           <div class="w-full p-2">
             <ScrollPanel style="width: 100%; height: 30dvh">
-              <div class="recom px-3 text-justify text-white">
-                <ol>
-                  <li>
-                    Pastikan sistem irigasi dan drainase dalam kondisi baik
-                    untuk menghindari kontaminasi silang dan penyebaran
-                    bakteri&nbsp;
-                  </li>
-                  <li>
-                    Ganti penggunaan pupuk kimia dengan pupuk organik seperti
-                    kompos atau pupuk kandang untuk memperbaiki kondisi tanah
-                    dan meningkatkan populasi mikroorganisme baik
-                  </li>
-                  <li>
-                    Lakukan penyemprotan dengan fungisida yang mengandung
-                    <em>azoxystrobin</em>, <em>propiconazole</em>, atau
-                    <em>hexaconazole</em> sesuai dosis anjuran pada waktu yang
-                    tepat&nbsp;
-                  </li>
-                  <li>
-                    Gunakan agen hayati seperti <em>Trichoderma spp.</em> dan
-                    <em>Pseudomonas fluorescens</em> yang dapat mengurangi
-                    populasi patogen secara alami &nbsp;
-                  </li>
-                  <li>
-                    Pangkas dan bakar tanaman yang terinfeksi untuk mencegah
-                    penyebaran lebih lanjut&nbsp;
-                  </li>
-                  <li>
-                    Pertimbangkan menanam tanaman penutup tanah atau tanaman
-                    lain selain padi dalam rotasi tanaman untuk mengurangi
-                    populasi bakteri di tanah
-                  </li>
-                </ol>
+              <div
+                class="recom px-3 text-justify text-white"
+                v-if="diseaseContent"
+                v-html="diseaseContent"
+              ></div>
+              <div class="w-full" v-else>
+                <div class="flex flex-col gap-2">
+                  <Skeleton
+                    height="1.5rem"
+                    v-for="item in Array.from({ length: 6 })"
+                  />
+                </div>
               </div>
               <ScrollTop />
             </ScrollPanel>
@@ -164,26 +143,30 @@ watch(imageSrc, async (value) => {
       console.error(err)
     })
 
-  const query = gql`
-    query ($name: String!) {
-      recommendation(name: $name) {
-        content
+  try {
+    const query = gql`
+      query ($name: String!) {
+        recommendation(name: $name) {
+          content
+        }
       }
-    }
-  `
-  const variables = { name: diseaseLabel.value }
-  const { result } = useQuery<RecommendationResponse>(query, variables)
-
-  console.log(result.value, diseaseLabel.value)
-
-  diseaseContent.value = result.value?.recommendation?.content ?? ""
+    `
+    const variables = { name: diseaseLabel.value }
+    const { result, loading } = useLazyQuery<RecommendationResponse>(query, variables)
+  
+    console.log(result.value?.recommendation, diseaseLabel.value)
+  
+    diseaseContent.value = result.value?.recommendation?.content ?? ""
+  } catch (error) {
+    console.error(error)
+  }
 })
 </script>
 
 <style>
 ol {
   list-style-type: decimal;
-  
+
   li {
     margin-left: 1.5rem;
   }

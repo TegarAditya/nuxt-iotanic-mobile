@@ -26,7 +26,11 @@
         />
       </div>
     </nav>
-    <ScrollPanel style="height: 75dvh" :pt="scrollPanelOptions" class="rounded-md overflow-hidden">
+    <ScrollPanel
+      style="height: 75dvh"
+      :pt="scrollPanelOptions"
+      class="overflow-hidden rounded-md"
+    >
       <div class="flex flex-col gap-4">
         <div class="hud h-fit w-full rounded-lg border-2 border-gray-300 p-5">
           <div v-if="weather">
@@ -65,7 +69,9 @@
           </div>
         </div>
         <!--MAP-->
-        <div class="overflow-hidden rounded-2xl border-2 border-gray-300 p-3">
+        <div
+          class="hud overflow-hidden rounded-2xl border-2 border-gray-300 p-3"
+        >
           <div class="w-full">
             <LMap
               style="height: 15rem"
@@ -82,7 +88,11 @@
               <LMarker :lat-lng="[-7.562922, 110.835633]">
                 <LPopup>{{ weather?.address }}</LPopup>
               </LMarker>
-              <LControlScale position="topright" :imperial="false" :metric="true" />
+              <LControlScale
+                position="topright"
+                :imperial="false"
+                :metric="true"
+              />
             </LMap>
           </div>
         </div>
