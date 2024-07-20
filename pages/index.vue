@@ -1,9 +1,7 @@
 <template>
   <div class="flex h-screen w-full items-center p-10">
-    <NuxtImg
+    <img
       src="/images/logo.png"
-      width="520"
-      format="avif"
       alt="hero"
       layout="fill"
       objectFit="cover"

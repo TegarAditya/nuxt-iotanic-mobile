@@ -45,7 +45,7 @@
                 </p>
               </div>
               <div>
-                <NuxtImg src="/images/cloudy.png" height="100" format="webp" />
+                <img src="/images/cloudy.png" height="100" format="webp" />
               </div>
             </div>
             <br class="py-4" />

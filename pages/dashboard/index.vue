@@ -39,7 +39,7 @@
               <p class="text-sm text-gray-400">{{ weather.address }}</p>
             </div>
             <div>
-              <NuxtImg src="/images/cloudy.png" height="100" format="webp" />
+              <img src="/images/cloudy.png" height="100" format="webp" />
             </div>
           </div>
           <Divider />
@@ -108,7 +108,7 @@
               class="card hud flex aspect-square h-full flex-col justify-between rounded-lg border-2 border-gray-500 p-3"
             >
               <div class="flex items-center justify-between">
-                <NuxtImg
+                <img
                   src="/images/plant-icon.png"
                   height="20"
                   class="h-fit"

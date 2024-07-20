@@ -53,7 +53,7 @@
             >
               <div class="flex flex-col gap-7">
                 <div class="items-center justify-between">
-                  <NuxtImg
+                  <img
                     src="/images/plant-icon.png"
                     height="20"
                     class="h-fit"

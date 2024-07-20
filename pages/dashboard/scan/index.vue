@@ -10,7 +10,7 @@
         class="mt-5 flex min-h-32 w-full flex-col items-center justify-center"
       >
         <div>
-          <NuxtImg src="/images/grasshopper.png" height="250" format="webp" />
+          <img src="/images/grasshopper.png" height="250" format="webp" />
         </div>
         <div class="flex flex-col items-center gap-4">
           <p class="text-center text-3xl font-bold text-white">
@@ -47,7 +47,7 @@
               @click="takePicture"
             />
           </div>
-          <NuxtImg
+          <img
             :src="imageSrc"
             v-if="imageSrc"
             class="h-52 w-full object-cover object-center"
@@ -64,11 +64,41 @@
         <div class="mt-3 flex w-full flex-col gap-4 py-4">
           <h3 class="text-center text-2xl font-bold text-white">Perawatan</h3>
           <div class="w-full p-2">
-            <ScrollPanel style="width: 100%; height: 250px">
-              <div
-                class="recom px-3 text-justify text-white"
-                v-html="diseaseContent"
-              ></div>
+            <ScrollPanel style="width: 100%; height: 30dvh">
+              <div class="recom px-3 text-justify text-white">
+                <ol>
+                  <li>
+                    Pastikan sistem irigasi dan drainase dalam kondisi baik
+                    untuk menghindari kontaminasi silang dan penyebaran
+                    bakteri&nbsp;
+                  </li>
+                  <li>
+                    Ganti penggunaan pupuk kimia dengan pupuk organik seperti
+                    kompos atau pupuk kandang untuk memperbaiki kondisi tanah
+                    dan meningkatkan populasi mikroorganisme baik
+                  </li>
+                  <li>
+                    Lakukan penyemprotan dengan fungisida yang mengandung
+                    <em>azoxystrobin</em>, <em>propiconazole</em>, atau
+                    <em>hexaconazole</em> sesuai dosis anjuran pada waktu yang
+                    tepat&nbsp;
+                  </li>
+                  <li>
+                    Gunakan agen hayati seperti <em>Trichoderma spp.</em> dan
+                    <em>Pseudomonas fluorescens</em> yang dapat mengurangi
+                    populasi patogen secara alami &nbsp;
+                  </li>
+                  <li>
+                    Pangkas dan bakar tanaman yang terinfeksi untuk mencegah
+                    penyebaran lebih lanjut&nbsp;
+                  </li>
+                  <li>
+                    Pertimbangkan menanam tanaman penutup tanah atau tanaman
+                    lain selain padi dalam rotasi tanaman untuk mengurangi
+                    populasi bakteri di tanah
+                  </li>
+                </ol>
+              </div>
               <ScrollTop />
             </ScrollPanel>
           </div>
@@ -95,7 +125,7 @@ interface Recommendation {
 }
 
 const imageSrc = useState(() => "")
-const diseaseLabel = useState(() => "")
+const diseaseLabel = useState(() => "Sheath Blight")
 const diseaseContent = useState(() => "")
 
 const takePicture = async () => {
@@ -128,7 +158,7 @@ watch(imageSrc, async (value) => {
     body: formData,
   })
     .then((res) => {
-      diseaseLabel.value = `${res.class} (${res.confidence.toFixed(2)*100}%)`
+      diseaseLabel.value = `${res.class} (${res.confidence.toFixed(2) * 100}%)`
     })
     .catch((err) => {
       console.error(err)
@@ -146,12 +176,16 @@ watch(imageSrc, async (value) => {
 
   console.log(result.value, diseaseLabel.value)
 
-  diseaseContent.value = result.value?.recommendation.content ?? ""
+  diseaseContent.value = result.value?.recommendation?.content ?? ""
 })
 </script>
 
 <style>
 ol {
   list-style-type: decimal;
+  
+  li {
+    margin-left: 1.5rem;
+  }
 }
 </style>
