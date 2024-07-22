@@ -108,11 +108,7 @@
               class="card hud flex aspect-square h-full flex-col justify-between rounded-lg border-2 border-gray-500 p-3"
             >
               <div class="flex items-center justify-between">
-                <img
-                  src="/images/plant-icon.png"
-                  height="20"
-                  class="h-fit"
-                />
+                <img src="/images/plant-icon.png" height="20" class="h-fit" />
                 <small class="rounded-full bg-primary px-2 text-white shadow-sm"
                   >aktif</small
                 >
@@ -131,7 +127,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { CurrentWeather, WeatherData } from "~/types/weather"
+import type { CurrentWeather } from "~/types/weather"
 import type { PassThrough } from "primevue/ts-helpers"
 import type { ScrollPanelPassThroughOptions } from "primevue/scrollpanel"
 
@@ -146,17 +142,21 @@ const toggle = ref(false)
 const placeholderArray = Array.from({ length: 4 })
 
 onMounted(() => {
-  navigator.geolocation.getCurrentPosition((position) => {
-    latitude.value = position.coords.latitude
-    longitude.value = position.coords.longitude
-    fetchWeatherData(latitude.value, longitude.value)
-      .then((data) => {
-        weather.value = data.current
-      })
-      .catch((error) => {
-        console.error("Error fetching weather data:", error)
-      })
-  })
+  getCurrentPosition()
+    .then((coords) => {
+      latitude.value = coords.latitude
+      longitude.value = coords.longitude
+      fetchWeatherData(latitude.value, longitude.value)
+        .then((data) => {
+          weather.value = data.current
+        })
+        .catch((error) => {
+          console.error("Error fetching weather data:", error)
+        })
+    })
+    .catch((error) => {
+      console.error("Error getting current position:", error)
+    })
 })
 
 const refreshWeather = () => {

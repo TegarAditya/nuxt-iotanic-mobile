@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxtjs/apollo",
     "nuxt3-leaflet",
+    "@hypernym/nuxt-anime",
   ],
   tailwindcss: {
     configPath: "tailwind.config.js",

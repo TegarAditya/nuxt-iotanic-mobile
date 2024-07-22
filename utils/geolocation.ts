@@ -1,4 +1,15 @@
-import type { Geolocation } from "~/types/geolocation"
+import type { Geolocation as GeolocationType } from "~/types/geolocation"
+import { Geolocation } from "@capacitor/geolocation"
+
+/**
+ * Retrieves the current position using the Geolocation API.
+ * @returns A promise that resolves to the coordinates of the current position.
+ */
+export async function getCurrentPosition() {
+  const { coords } = await Geolocation.getCurrentPosition()
+
+  return coords
+}
 
 /**
  * Retrieves the address based on the provided longitude and latitude coordinates.
@@ -9,7 +20,7 @@ import type { Geolocation } from "~/types/geolocation"
 export async function getAddress(longitude: number, latitude: number) {
   const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=id-ID`
   const response = await fetch(url)
-  const geoData: Geolocation = await response.json()
+  const geoData: GeolocationType = await response.json()
 
   let address = ""
 

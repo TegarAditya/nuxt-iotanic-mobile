@@ -42,35 +42,37 @@
         rounded
       />
     </div>
-
     <div class="mt-5 overflow-hidden rounded-lg shadow-inner">
       <ScrollPanel class="h-[62dvh]" :pt="scrollPanelOptions">
         <div class="grid gap-5">
           <div v-for="(item, index) in placeholderArray">
             <NuxtLink :to="`/dashboard/analytics/${index}`">
-            <div
-              class="card hud flex h-full justify-between rounded-lg border-gray-500 p-3"
-            >
-              <div class="flex flex-col gap-7">
-                <div class="items-center justify-between">
-                  <img
-                    src="/images/plant-icon.png"
-                    height="20"
-                    class="h-fit"
-                  />
+              <div
+                class="card hud flex h-full justify-between rounded-lg border-gray-500 p-3"
+              >
+                <div class="flex flex-col gap-7">
+                  <div class="items-center justify-between">
+                    <img
+                      src="/images/plant-icon.png"
+                      height="20"
+                      class="h-fit"
+                    />
+                  </div>
+                  <div>
+                    <p class="text-sm font-bold text-white">
+                      Sawah {{ index }}
+                    </p>
+                    <p class="text-xs text-gray-400">1 Varietas</p>
+                  </div>
                 </div>
-                <div>
-                  <p class="text-sm font-bold text-white">Sawah {{ index }}</p>
-                  <p class="text-xs text-gray-400">1 Varietas</p>
+                <div class="fl">
+                  <small
+                    class="rounded-full bg-primary px-2 text-white shadow-sm"
+                    >aktif</small
+                  >
                 </div>
               </div>
-              <div class="fl">
-                <small class="rounded-full bg-primary px-2 text-white shadow-sm"
-                  >aktif</small
-                >
-              </div>
-            </div>
-          </NuxtLink>
+            </NuxtLink>
           </div>
         </div>
         <ScrollTop
