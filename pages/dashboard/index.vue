@@ -99,7 +99,7 @@
         <p class="font-bold text-white">Pengukuran terbaru</p>
       </div>
       <div>
-        <div class="mt-5 grid grid-cols-2 gap-5 pb-10">
+        <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-5 pb-10">
           <NuxtLink
             :to="`/dashboard/analytics/${index}`"
             v-for="(item, index) in placeholderArray"
@@ -139,7 +139,7 @@ const latitude = ref(0)
 const longitude = ref(0)
 const weather: Ref<CurrentWeather | null> = useState("weather")
 const toggle = ref(false)
-const placeholderArray = Array.from({ length: 4 })
+const placeholderArray = Array.from({ length: 10 })
 
 onMounted(() => {
   getCurrentPosition()

@@ -11,12 +11,13 @@
     </div>
     <Divider><p class="text-gray-400">Atau masuk dengan</p></Divider>
     <div>
+      <Message severity="error" v-if="isAuthError">Email/Password salah</Message>
       <div v-for="field in formField" class="flex w-full flex-col">
         <div class="flex w-full flex-col gap-1 pb-3">
           <label for="username" class="font-semibold">{{ field.label }}</label>
           <InputText
             :id="field.name"
-            v-model="value"
+            v-model="email"
             aria-describedby="username-help"
             size="large"
             v-if="field.type === 'email'"
@@ -24,7 +25,8 @@
             :placeholder="field.placeholder"
           />
           <Password
-            v-model="value"
+            :id="field.name"
+            v-model="password"
             v-if="field.type === 'password'"
             toggleMask
             size="large"
@@ -38,7 +40,7 @@
         <AuthSubmitAction @click="submit">Masuk</AuthSubmitAction>
       </div>
       <div class="w-full">
-        <p class="text-gray-400 text-center">
+        <p class="text-center text-gray-400">
           Belum punya akun?
           <NuxtLink to="/auth/register" class="font-bold text-blue-400">
             Daftar
@@ -60,7 +62,17 @@ useHead({
   ],
 })
 
-const value = ref("")
+const { signIn } = useAuth()
+const { status } = useAuthState()
+
+const email = ref("")
+const password = ref("")
+const isAuthError = ref(false)
+
+const credentials = {
+  email: email.value,
+  password: password.value,
+}
 
 const formField = [
   {
@@ -79,10 +91,13 @@ const formField = [
   },
 ]
 
-preloadRouteComponents('/dashboard')
+preloadRouteComponents("/dashboard")
 
 const submit = async () => {
-  await navigateTo("/dashboard")
+  await signIn(credentials, { callbackUrl: "/dashboard" }).catch((error) => {
+    console.error("Failed to login", error)
+    isAuthError.value = true
+  })
 }
 </script>
 

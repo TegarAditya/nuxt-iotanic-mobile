@@ -43,7 +43,7 @@
       />
     </div>
     <div class="mt-5 overflow-hidden rounded-lg shadow-inner">
-      <ScrollPanel class="h-[62dvh]" :pt="scrollPanelOptions">
+      <ScrollPanel class="h-[62dvh] md:h-[70dvh]" :pt="scrollPanelOptions">
         <div class="grid gap-5">
           <div v-for="(item, index) in placeholderArray">
             <NuxtLink :to="`/dashboard/analytics/${index}`">
@@ -68,7 +68,13 @@
                 <div class="fl">
                   <small
                     class="rounded-full bg-primary px-2 text-white shadow-sm"
+                    v-if="isActiveLandMenu"
                     >aktif</small
+                  >
+                  <small
+                    class="rounded-full bg-white px-2 text-primary shadow-sm"
+                    v-if="!isActiveLandMenu"
+                    >non-aktif</small
                   >
                 </div>
               </div>

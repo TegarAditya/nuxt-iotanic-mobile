@@ -9,3 +9,8 @@ export interface Data {
 export interface Recommendation {
     content: string;
 }
+
+export interface PredictionResponse {
+    class:      string;
+    confidence: number;
+}

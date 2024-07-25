@@ -2271,6 +2271,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sidebase/nuxt-auth@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "@sidebase/nuxt-auth@npm:0.8.1"
+  dependencies:
+    "@nuxt/kit": "npm:^3.11.2"
+    defu: "npm:^6.1.4"
+    h3: "npm:^1.11.1"
+    knitwork: "npm:^1.1.0"
+    nitropack: "npm:^2.9.6"
+    requrl: "npm:^3.0.2"
+    ufo: "npm:^1.5.3"
+  peerDependencies:
+    next-auth: ~4.21.1
+  checksum: 10c0/8883c9fe8357648859ec66638a21e703664c8f6b1317efb876f111f69fd03f95425e0903afe504729dc035f43344c1fa0b77fbb7db868653747a8d911c983c18
+  languageName: node
+  linkType: hard
+
 "@sigstore/bundle@npm:^2.3.2":
   version: 2.3.2
   resolution: "@sigstore/bundle@npm:2.3.2"
@@ -7471,6 +7488,7 @@ __metadata:
     "@nuxtjs/google-fonts": "npm:^3.2.0"
     "@nuxtjs/tailwindcss": "npm:^6.12.0"
     "@quasar/extras": "npm:^1.16.11"
+    "@sidebase/nuxt-auth": "npm:^0.8.1"
     "@tailwindcss/typography": "npm:^0.5.13"
     "@tensorflow/tfjs": "npm:^4.20.0"
     "@vueuse/core": "npm:^10.11.0"
@@ -8789,6 +8807,13 @@ __metadata:
   version: 2.1.1
   resolution: "require-directory@npm:2.1.1"
   checksum: 10c0/83aa76a7bc1531f68d92c75a2ca2f54f1b01463cb566cf3fbc787d0de8be30c9dbc211d1d46be3497dac5785fe296f2dd11d531945ac29730643357978966e99
+  languageName: node
+  linkType: hard
+
+"requrl@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "requrl@npm:3.0.2"
+  checksum: 10c0/f1a7a9ff79a89c496548d08380d4b2465f7929f22f7aaf5db98d573ed7e979c877e014a6ddfc11f586da4eb85e79fe2bae5071fa5d8c761cd8296dce914a8855
   languageName: node
   linkType: hard
 

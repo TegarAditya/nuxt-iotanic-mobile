@@ -30,12 +30,15 @@
         </div>
       </div>
     </div>
-    <div v-if="imageSrc">
+    <div
+      v-if="imageSrc"
+      class="flex w-full flex-col items-center justify-center"
+    >
       <div
-        class="mt-5 flex min-h-32 w-full flex-col items-center justify-center"
+        class="mt-5 flex min-h-32 w-full flex-col items-center justify-center md:max-w-2xl"
       >
-        <div class="relative w-full overflow-hidden rounded-2xl">
-          <div class="absolute right-0 top-0 z-10 m-2">
+        <div class="relative w-full overflow-hidden rounded-2xl md:min-h-72">
+          <div class="absolute right-0 top-0 z-10 m-2 space-x-2">
             <Button
               icon="pi pi-refresh"
               label="Ulangi"
@@ -50,23 +53,29 @@
           <img
             :src="imageSrc"
             v-if="imageSrc"
-            class="h-52 w-full object-cover object-center"
+            class="h-52 w-full object-cover object-center md:h-72"
           />
           <div class="flex w-full items-center bg-primary">
             <h2
               class="w-full py-2 text-center text-xl font-bold text-white"
               v-if="diseaseLabel"
             >
-              {{ diseaseLabel }}
+              {{ diseaseLabel }} {{ confidence }}
+            </h2>
+            <h2
+              class="w-full py-2 text-center text-xl font-bold text-white"
+              v-else
+            >
+              Harap tunggu...
             </h2>
           </div>
         </div>
         <div class="mt-3 flex w-full flex-col gap-4 py-4">
           <h3 class="text-center text-2xl font-bold text-white">Perawatan</h3>
-          <div class="w-full p-2">
+          <div class="hud w-full p-2 py-5">
             <ScrollPanel style="width: 100%; height: 30dvh">
               <div
-                class="recom px-3 text-justify text-white"
+                class="recom px-3 text-justify text-sm text-white md:text-lg"
                 v-if="diseaseContent"
                 v-html="diseaseContent"
               ></div>
@@ -88,11 +97,13 @@
 </template>
 
 <script lang="ts" setup>
+import type {PredictionResponse} from "~/types/scan"
 import { Camera, CameraResultType } from "@capacitor/camera"
 
 //@ts-ignore
 definePageMeta({
   layout: "dashboard",
+  auth: false,
 })
 
 interface RecommendationResponse {
@@ -104,7 +115,8 @@ interface Recommendation {
 }
 
 const imageSrc = useState(() => "")
-const diseaseLabel = useState(() => "Sheath Blight")
+const diseaseLabel = useState(() => "")
+const confidence = useState(() => "")
 const diseaseContent = useState(() => "")
 
 const takePicture = async () => {
@@ -124,6 +136,10 @@ const takePicture = async () => {
 }
 
 watch(imageSrc, async (value) => {
+  diseaseLabel.value = ""
+  confidence.value = ""
+  diseaseContent.value = ""
+
   const config = useRuntimeConfig()
 
   const blob = await fetch(value).then((res) => res.blob())
@@ -136,39 +152,54 @@ watch(imageSrc, async (value) => {
     method: "POST",
     body: formData,
   })
-    .then((res) => {
-      diseaseLabel.value = `${res.class} (${res.confidence.toFixed(2) * 100}%)`
+    .then((res: PredictionResponse) => {
+      diseaseLabel.value = res.class
+      confidence.value = `(${Number(res.confidence.toFixed(2)) * 100}%)`
     })
     .catch((err) => {
       console.error(err)
     })
 
-  try {
-    const query = gql`
-      query ($name: String!) {
-        recommendation(name: $name) {
-          content
-        }
+  const query = gql`
+    query ($name: String!) {
+      recommendation(name: $name) {
+        content
       }
-    `
-    const variables = { name: diseaseLabel.value }
-    const { result, loading } = useLazyQuery<RecommendationResponse>(query, variables)
-  
-    console.log(result.value?.recommendation, diseaseLabel.value)
-  
-    diseaseContent.value = result.value?.recommendation?.content ?? ""
-  } catch (error) {
+    }
+  `
+  const variables = { name: diseaseLabel.value }
+  const { onResult, onError } = useQuery<RecommendationResponse>(
+    query,
+    variables,
+  )
+
+  console.log(diseaseLabel.value, confidence.value)
+
+  onResult((result) => {
+    diseaseContent.value = result.data?.recommendation?.content ?? ""
+  })
+
+  onError((error) => {
     console.error(error)
-  }
+  })
 })
 </script>
 
 <style>
+.hud {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.1px);
+  -webkit-backdrop-filter: blur(10.1px);
+}
+
 ol {
   list-style-type: decimal;
 
   li {
-    margin-left: 1.5rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
   }
 }
 </style>
