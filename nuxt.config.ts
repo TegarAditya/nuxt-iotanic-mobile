@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     "nuxt3-leaflet",
     "@hypernym/nuxt-anime",
     "@sidebase/nuxt-auth",
+    "@nuxtjs/color-mode",
   ],
   tailwindcss: {
     configPath: "tailwind.config.js",
@@ -54,7 +55,7 @@ export default defineNuxtConfig({
     },
   },
   auth: {
-    globalAppMiddleware: true,
+    globalAppMiddleware: false,
     baseURL: process.env.NUXT_PUBLIC_API_URL ?? "https://be.tegar.dev",
     provider: {
       type: "refresh",
@@ -72,8 +73,8 @@ export default defineNuxtConfig({
         signInResponseTokenPointer: "/access_token",
       },
       refreshToken: {
-        signInResponseRefreshTokenPointer: "/refresh-token",
-        refreshRequestTokenPointer: "Bearer",
+        signInResponseRefreshTokenPointer: "/access_token",
+        refreshRequestTokenPointer: "access_token",
         cookieName: "auth.token",
         maxAgeInSeconds: 1800,
         cookieDomain: "sidebase.io",

@@ -1647,6 +1647,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nuxtjs/color-mode@npm:^3.4.2":
+  version: 3.4.2
+  resolution: "@nuxtjs/color-mode@npm:3.4.2"
+  dependencies:
+    "@nuxt/kit": "npm:^3.12.2"
+    pathe: "npm:^1.1.2"
+    pkg-types: "npm:^1.1.1"
+    semver: "npm:^7.6.2"
+  checksum: 10c0/26cc3ec6bed29ee5733ab538adb89c7706b88a4cbe78028cc135e0c5b29a5a387017bd8057d5856945016ed6d47e5673f9840cab1ec58b7edd85f92c5f9013df
+  languageName: node
+  linkType: hard
+
 "@nuxtjs/google-fonts@npm:^3.2.0":
   version: 3.2.0
   resolution: "@nuxtjs/google-fonts@npm:3.2.0"
@@ -7485,6 +7497,7 @@ __metadata:
     "@ionic/pwa-elements": "npm:^3.3.0"
     "@nuxt/image": "npm:^1.7.0"
     "@nuxtjs/apollo": "npm:^5.0.0-alpha.14"
+    "@nuxtjs/color-mode": "npm:^3.4.2"
     "@nuxtjs/google-fonts": "npm:^3.2.0"
     "@nuxtjs/tailwindcss": "npm:^6.12.0"
     "@quasar/extras": "npm:^1.16.11"
