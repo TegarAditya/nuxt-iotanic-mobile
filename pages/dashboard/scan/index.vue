@@ -73,22 +73,26 @@
         <div class="mt-3 flex w-full flex-col gap-4 py-4">
           <h3 class="text-center text-2xl font-bold text-white">Perawatan</h3>
           <div class="hud w-full p-2 py-5">
-            <ScrollPanel style="width: 100%; height: 30dvh">
+            <ScrollPanel
+              style="width: 100%; height: 30dvh"
+              v-if="diseaseContent"
+            >
               <div
-                class="recom px-3 text-justify text-sm text-white md:text-lg"
-                v-if="diseaseContent"
+                class="recom px-3 pr-4 text-justify text-sm text-white md:text-lg"
                 v-html="diseaseContent"
               ></div>
-              <div class="w-full" v-else>
-                <div class="flex flex-col gap-2">
-                  <Skeleton
-                    height="1.5rem"
-                    v-for="item in Array.from({ length: 6 })"
-                  />
-                </div>
-              </div>
               <ScrollTop />
             </ScrollPanel>
+            <div class="flex gap-4 flex-col justify-center items-center h-[30dvh]" v-else>
+              <ProgressSpinner
+                style="width: 50px; height: 50px"
+                strokeWidth="8"
+                class="fill-surface-0 dark:fill-surface-800"
+                animationDuration=".5s"
+                aria-label="Custom ProgressSpinner"
+              />
+              <p class="text-white text-lg font-bold">Menenmukan rekomendasi yang cocok...</p>
+            </div>
           </div>
         </div>
       </div>
@@ -97,7 +101,7 @@
 </template>
 
 <script lang="ts" setup>
-import type {PredictionResponse} from "~/types/scan"
+import type { PredictionResponse } from "~/types/scan"
 import { Camera, CameraResultType } from "@capacitor/camera"
 
 //@ts-ignore
