@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen justify-center py-5 pb-32">
-    <div class="w-full py-2">
+    <div class="w-full max-w-lg py-2">
       <h1 class="text-center text-xl font-bold text-white">Profil</h1>
     </div>
     <div class="absolute bottom-0 z-10 w-full">

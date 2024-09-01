@@ -10,11 +10,11 @@
       class="gradient-circle absolute -bottom-52 -left-56 aspect-square w-96 opacity-65"
     />
   </div>
-  <div>
+  <div class="max-w-2xl mx-auto">
     <slot />
   </div>
-  <div class="fixed bottom-0 z-30 h-24 w-full pt-2">
-    <div class="navbar m-4 mt-0 grid h-16 grid-cols-4 gap-2 rounded-xl p-2">
+  <div class="fixed bottom-0 z-30 h-24 w-full pt-2 px-4">
+    <div class="navbar m-4 mt-0 grid h-16 grid-cols-4 gap-2 rounded-xl p-2 max-w-md mx-auto">
       <Button
         icon="pi pi-home"
         class="w-full text-2xl font-bold text-white"
