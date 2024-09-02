@@ -100,7 +100,7 @@
 
         <!-- BUTTON APP -->
         <div>
-          <Button class="w-full" raised>Monitoring Padi</Button>
+          <Button class="w-full" raised @click="navigateToPlantMonitoring">Monitoring Padi</Button>
         </div>
         <!-- END BUTTON APP -->
       </div>
@@ -140,6 +140,10 @@ const scrollPanelOptions: PassThrough<ScrollPanelPassThroughOptions> = {
     style: { "border-right": "none" },
   },
   barY: "hidden",
+}
+
+async function navigateToPlantMonitoring() {
+  await navigateTo(`/dashboard/analytics/${id.value}/padi-c64`)
 }
 
 onMounted(() => {
