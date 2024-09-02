@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   nitro: {
     node: true,
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
   },
