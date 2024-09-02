@@ -1,14 +1,6 @@
 <template>
   <div class="fixed -z-10 min-h-screen w-full overflow-hidden bg-[#1D1B1F]">
-    <div
-      class="gradient-circle absolute -left-56 top-5 aspect-square w-96 opacity-65"
-    />
-    <div
-      class="gradient-circle absolute -right-56 top-52 aspect-square w-96 opacity-65"
-    />
-    <div
-      class="gradient-circle absolute -bottom-52 -left-56 aspect-square w-96 opacity-65"
-    />
+    <CircleGradientAccent />
   </div>
   <div class="max-w-2xl mx-auto">
     <slot />
