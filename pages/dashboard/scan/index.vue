@@ -91,7 +91,7 @@
                 animationDuration=".5s"
                 aria-label="Custom ProgressSpinner"
               />
-              <p class="text-white text-lg font-bold">Menenmukan rekomendasi yang cocok...</p>
+              <p class="text-white text-lg font-bold">Menemukan rekomendasi yang cocok...</p>
             </div>
           </div>
         </div>
