@@ -6,7 +6,6 @@
           icon="pi pi-angle-left"
           class="self-center text-lg"
           style="background: transparent"
-          aria-label="Submit"
           severity="secondary"
           @click="$router.back"
           raised
@@ -20,9 +19,9 @@
           icon="pi pi-bars"
           class="self-center text-lg"
           style="background: transparent"
-          aria-label="Submit"
           severity="secondary"
           raised
+          @click="isDrawerVisible = true"
         />
       </div>
     </div>
@@ -89,6 +88,43 @@
         />
       </ScrollPanel>
     </div>
+    <Sidebar
+      v-model:visible="isDrawerVisible"
+      position="bottom"
+      style="height: auto"
+      v-if="isMobile"
+    >
+      <template #header>
+        <p class="font-bold">Opsi Tindakan</p>
+      </template>
+      <div class="mb-4 flex flex-col gap-4">
+        <Button
+          class="w-full"
+          label="Tambah Lahan"
+          @click="$router.push('/dashboard/analytics/create')"
+        />
+        <Button class="w-full" label="Hapus Lahan" severity="secondary" />
+      </div>
+    </Sidebar>
+    <Dialog
+      v-model:visible="isDrawerVisible"
+      modal
+      header="Edit Profile"
+      :style="{ width: '25rem' }"
+      v-else
+    >
+      <template #header>
+        <p class="font-bold">Opsi Tindakan</p>
+      </template>
+      <div class="mb-4 flex flex-col gap-4">
+        <Button
+          class="w-full"
+          label="Tambah Lahan"
+          @click="$router.push('/dashboard/analytics/create')"
+        />
+        <Button class="w-full" label="Hapus Lahan" severity="secondary" />
+      </div>
+    </Dialog>
   </div>
 </template>
 
@@ -101,9 +137,14 @@ definePageMeta({
   layout: "dashboard",
 })
 
-const isActiveLandMenu = ref(true)
+const { width } = useWindowSize()
 
-const placeholderArray = Array.from({ length: 10 })
+const isMobile = ref(width.value < 768)
+
+const isActiveLandMenu = ref(true)
+const isDrawerVisible = ref(false)
+
+const placeholderArray = Array.from({ length: 3 })
 
 const scrollPanelOptions: PassThrough<ScrollPanelPassThroughOptions> = {
   wrapper: {
