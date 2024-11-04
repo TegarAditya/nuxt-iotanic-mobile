@@ -115,6 +115,7 @@ interface RecommendationResponse {
 }
 
 interface Recommendation {
+  name: string
   content: string
 }
 
@@ -165,22 +166,22 @@ watch(imageSrc, async (value) => {
     })
 
   const query = gql`
-    query ($name: String!) {
-      recommendation(name: $name) {
+    query ($class: String!) {
+      recommendation(class: $class) {
+        name
         content
       }
     }
   `
-  const variables = { name: diseaseLabel.value }
+  const variables = { class: diseaseLabel.value }
   const { onResult, onError } = useQuery<RecommendationResponse>(
     query,
     variables,
   )
 
-  console.log(diseaseLabel.value, confidence.value)
-
   onResult((result) => {
     diseaseContent.value = result.data?.recommendation?.content ?? ""
+    diseaseLabel.value = result.data?.recommendation?.name ?? diseaseLabel.value
   })
 
   onError((error) => {
