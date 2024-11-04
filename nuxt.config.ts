@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import path from "path"
-import t from "./android/app/src/main/assets/public/_nuxt/BJ4xbtYk"
 
 export default defineNuxtConfig({
   nitro: {
@@ -56,7 +55,7 @@ export default defineNuxtConfig({
   },
   auth: {
     globalAppMiddleware: false,
-    baseURL: process.env.NUXT_PUBLIC_API_URL ?? "https://be.tegar.dev/",
+    baseURL: process.env.NUXT_PUBLIC_API_URL ?? "https://soil.agrotechno.id/",
     provider: {
       type: "local",
       endpoints: {

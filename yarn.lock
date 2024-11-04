@@ -562,6 +562,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@capacitor/preferences@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "@capacitor/preferences@npm:6.0.2"
+  peerDependencies:
+    "@capacitor/core": ^6.0.0
+  checksum: 10c0/19c36efe2e2f569bfb14ee78949187d1c46c3e59f3566d90c137e2af0a258a9af15326e49616b93ed53675e47f1bb37eaad8080d2b603970a57ad0234e256f58
+  languageName: node
+  linkType: hard
+
 "@capacitor/status-bar@npm:6.0.0":
   version: 6.0.0
   resolution: "@capacitor/status-bar@npm:6.0.0"
@@ -7562,6 +7571,7 @@ __metadata:
     "@capacitor/geolocation": "npm:^6.0.0"
     "@capacitor/haptics": "npm:6.0.0"
     "@capacitor/keyboard": "npm:6.0.1"
+    "@capacitor/preferences": "npm:^6.0.2"
     "@capacitor/status-bar": "npm:6.0.0"
     "@chenfengyuan/vue-qrcode": "npm:2"
     "@hypernym/nuxt-anime": "npm:^2.1.1"
