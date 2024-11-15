@@ -1,4 +1,4 @@
-package nuxt.app;
+package id.iotanic.mobile;
 
 import com.getcapacitor.BridgeActivity;
 

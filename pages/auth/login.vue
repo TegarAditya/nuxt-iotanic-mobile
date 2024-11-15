@@ -1,5 +1,7 @@
 <template>
-  <div class="flex w-full flex-col items-center justify-center">
+  <div
+    class="flex w-full flex-col items-center justify-center md:min-h-[100dvh]"
+  >
     <div class="w-full max-w-lg px-5 text-white">
       <div class="pt-20">
         <h1 class="text-4xl font-extrabold">Masuk</h1>
@@ -10,7 +12,11 @@
           <SocialAuthButton provider="facebook" />
         </div>
       </div>
-      <Divider><p class="text-gray-400">Atau masuk dengan</p></Divider>
+      <div class="flex items-center">
+        <Divider />
+        <p class="mx-2 text-nowrap text-gray-400">Atau masuk dengan</p>
+        <Divider />
+      </div>
       <div>
         <Message severity="error" v-if="isAuthError" :closable="false"
           >email atau password salah</Message
@@ -59,6 +65,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useAuthStore } from "~/stores/auth"
+
 useHead({
   title: "Login",
   meta: [
@@ -70,6 +78,7 @@ useHead({
 })
 
 const { signIn } = useAuth()
+const auth = useAuthStore()
 
 const email = ref("")
 const password = ref("")
@@ -97,13 +106,16 @@ const formField = [
   },
 ]
 
-preloadRouteComponents("/dashboard")
-
 const submit = async () => {
-  await signIn(credentials, { callbackUrl: "/dashboard" }).catch((error) => {
-    console.error("Failed to login", error)
-    isAuthError.value = true
-  })
+  await signIn(credentials, { callbackUrl: "/dashboard" })
+    .then(async () => {
+      await auth.setEmail(credentials.email)
+      await auth.setName("Farmer")
+    })
+    .catch((error) => {
+      console.error("Failed to login", error)
+      isAuthError.value = true
+    })
 }
 
 watch([email, password], () => {

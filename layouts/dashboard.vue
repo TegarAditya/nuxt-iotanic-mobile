@@ -40,6 +40,9 @@
 </template>
 
 <script lang="ts" setup>
+
+useAuthStore().init()
+
 </script>
 
 <style>

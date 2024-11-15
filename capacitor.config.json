@@ -1,5 +1,5 @@
 {
-  "appId": "nuxt.app",
+  "appId": "id.iotanic.mobile",
   "appName": "IoTanic",
   "webDir": ".output/public"
 }

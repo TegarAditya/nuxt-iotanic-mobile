@@ -1,10 +1,11 @@
 <template>
-  <div class="flex h-screen w-full items-center p-10">
+  <div class="flex h-screen w-full items-center justify-center p-10">
     <img
       src="/images/logo.png"
       alt="hero"
       layout="fill"
       objectFit="cover"
+      class="md:max-w-lg"
     />
   </div>
 </template>

@@ -5,17 +5,22 @@ export default defineNuxtConfig({
   nitro: {
     node: true,
   },
-  devtools: { enabled: false },
+
+  devtools: { enabled: true },
+
   app: {
     pageTransition: { name: "page", mode: "out-in" },
   },
+
   runtimeConfig: {
     public: {
       scanApiUrl: process.env.SCAN_API_URL,
       graphApiUrl: process.env.GRAPH_API_URL,
     },
   },
+
   ssr: false,
+
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxtjs/google-fonts",
@@ -25,12 +30,15 @@ export default defineNuxtConfig({
     "@nuxtjs/apollo",
     "nuxt3-leaflet",
     "@hypernym/nuxt-anime",
+    "@pinia/nuxt",
     "@sidebase/nuxt-auth",
     "@nuxtjs/color-mode",
   ],
+
   tailwindcss: {
     configPath: "tailwind.config.js",
   },
+
   primevue: {
     options: {
       unstyled: true,
@@ -38,6 +46,7 @@ export default defineNuxtConfig({
     },
     importPT: { from: path.resolve(__dirname, "./presets/aura/") }, //import and apply preset
   },
+
   googleFonts: {
     families: {
       "Plus Jakarta Sans": {
@@ -46,6 +55,7 @@ export default defineNuxtConfig({
       },
     },
   },
+
   apollo: {
     clients: {
       default: {
@@ -53,9 +63,10 @@ export default defineNuxtConfig({
       },
     },
   },
+
   auth: {
     globalAppMiddleware: false,
-    baseURL: process.env.NUXT_PUBLIC_API_URL ?? "https://soil.agrotechno.id/",
+    baseURL: process.env.NUXT_PUBLIC_API_URL ?? "https://soil.agrotechno.id/api/auth/",
     provider: {
       type: "local",
       endpoints: {
@@ -76,4 +87,6 @@ export default defineNuxtConfig({
       enableOnWindowFocus: true,
     },
   },
+
+  compatibilityDate: "2024-11-07",
 })

@@ -3,7 +3,7 @@
     <div
       class="header mb-5 flex items-center justify-between bg-transparent pt-5"
     >
-      <p class="text-xl font-bold text-white">Rara</p>
+      <p class="text-xl font-bold text-white">Halo, {{ auth.name }}</p>
       <Button
         icon="pi pi-bell"
         class="text-lg"
@@ -134,6 +134,8 @@ import type { ScrollPanelPassThroughOptions } from "primevue/scrollpanel"
 definePageMeta({
   layout: "dashboard",
 })
+
+const auth = useAuthStore()
 
 const latitude = ref(0)
 const longitude = ref(0)
